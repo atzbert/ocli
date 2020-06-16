@@ -1,0 +1,14 @@
+[Unit]
+Description=OwnTracks cli
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/home/pi/owntracks-cli-publisher.env
+ExecStart=/home/pi/bin/owntracks-cli-publisher
+Restart=always
+RestartSec=60
+User=pi
+
+[Install]
+WantedBy=multi-user.target
