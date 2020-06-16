@@ -673,6 +673,8 @@ int main(int argc, char **argv)
 		printf("t_base %s\n", ud->basetopic);
 		printf("t_cmd  %s\n", ud->t_cmd);
 		printf("t_dump %s\n", ud->t_dump );
+		printf("mqtthost %s\n", mqtt_host );
+		printf("mqttuser %s\n", mqtt_user );
 		printf("GPSD_API_MAJOR_VERSION %d\n",
 			GPSD_API_MAJOR_VERSION);
 	}
