@@ -5,6 +5,7 @@ After=network.target
 [Service]
 Type=simple
 EnvironmentFile=/home/pi/owntracks-cli-publisher.env
+PassEnvironment=fixlog BASE_TOPIC MQTT_HOST MQTT_PORT MQTT_USER MQTT_PASSWORD GPSD_HOST GPSD_PORT OCLI_TID OCLI_INTERVAL OCLI_DISPLACEMENT
 ExecStart=/home/pi/bin/owntracks-cli-publisher
 Restart=always
 RestartSec=60
