@@ -726,6 +726,7 @@ int main(int argc, char **argv)
 	mosquitto_message_callback_set(ud->mosq, cb_message);
 
 	if (mqtt_user != NULL) {
+        printf("Authenticating against %s with user %s \n", mqtt_host, mqtt_user);
         mosquitto_username_pw_set(ud->mosq, mqtt_user, mqtt_password);
     }
 
