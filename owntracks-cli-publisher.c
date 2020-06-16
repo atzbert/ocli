@@ -542,6 +542,8 @@ int main(int argc, char **argv)
 	char *gpsd_host = "localhost", *gpsd_port = DEFAULT_GPSD_PORT;
 	char *mqtt_host = "localhost";
 	short mqtt_port = 1883;
+	char *mqtt_user = NULL;
+	char *mqtt_password = NULL;
 	struct udata udata, *ud = &udata;
 	char hostname[BUFSIZ], *h, *username;
 	JsonNode *jo;
@@ -590,6 +592,14 @@ int main(int argc, char **argv)
 
 	if ((p = getenv("MQTT_PORT")) != NULL) {
 		mqtt_port = atoi(p) < 1 ? 1883 : atoi(p);
+	}
+
+	if ((p = getenv("MQTT_USER")) != NULL) {
+		mqtt_user = strdup(p);
+	}
+
+	if ((p = getenv("MQTT_PASSWORD")) != NULL) {
+		mqtt_password = strdup(p);
 	}
 
 	if ((p = getenv("OCLI_CACERT")) != NULL) {
@@ -714,6 +724,10 @@ int main(int argc, char **argv)
 	mosquitto_connect_callback_set(ud->mosq, cb_connect);
 	mosquitto_disconnect_callback_set(ud->mosq, cb_disconnect);
 	mosquitto_message_callback_set(ud->mosq, cb_message);
+
+	if (mqtt_user != NULL) {
+        mosquitto_username_pw_set(ud->mosq, mqtt_user, mqtt_password);
+    }
 
 	if ((rc = mosquitto_connect(ud->mosq, mqtt_host, mqtt_port, keepalive)) != MOSQ_ERR_SUCCESS) {
 		fprintf(stderr, "Unable to connect to %s:%d: %s\n", mqtt_host, mqtt_port,
